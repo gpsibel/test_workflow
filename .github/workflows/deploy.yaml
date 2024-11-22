@@ -32,7 +32,7 @@ jobs:
         run : echo ${{ steps.changed-files.outputs.all_changed_files }}
 
   deploy-discovery-hub:
-    name: deploy-discovery-hub-production
+    name: deploy-job
     runs-on: ubuntu-latest
     strategy:
       matrix:
