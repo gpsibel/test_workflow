@@ -29,9 +29,7 @@ jobs:
           files: ${{ env.env_files_dir }}/*.env
           matrix: true
       - name: Debug Raw Output
-        run : |
-          echo "Changed files: '${{ steps.changed-files.outputs.all_changed_files }}'"
-          echo "Length: ${{ fromJson(steps.changed-files.outputs.all_changed_files) | length }}"
+        run : echo ${{ steps.changed-files.outputs.all_changed_files }} 
 
   deploy-job:
     name: deploy-job
