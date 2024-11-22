@@ -17,7 +17,7 @@ jobs:
     name: get-environments
     runs-on: ubuntu-latest
     outputs:
-      files: ${{ steps.changed-files.outputs.all_changed_files || '[]' }}
+      files: ${{ steps.changed-files.outputs.all_changed_files }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        files: ${{ needs.get-environments.outputs.files }}
+        files: ${{ needs.get-environments.outputs }}
     permissions:
       packages: write
       id-token: write # This is required for requesting the JWT
