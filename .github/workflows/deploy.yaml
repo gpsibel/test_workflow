@@ -1,4 +1,4 @@
-name: Deploy Discovery Hub Production
+name: Deploy Job 
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
       - name: echo
         run : echo ${{ steps.changed-files.outputs.all_changed_files }}
 
-  deploy-discovery-hub:
+  deploy-job:
     name: deploy-job
     runs-on: ubuntu-latest
     strategy:
@@ -47,3 +47,11 @@ jobs:
         shell: bash
     env:
       release_dir: release
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy File
+        run: |
+          echo "Deploying file: ${{ matrix.files }}"
+          # Add your deployment commands here
