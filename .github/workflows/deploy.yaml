@@ -1,0 +1,49 @@
+name: Deploy Discovery Hub Production
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "env/**"
+      - "env/env1.env"
+      - "env/env2.env
+
+env:
+  env_files_dir: env
+
+jobs:
+  get-environments:
+    name: get-environments
+    runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: ${{ env.env_files_dir }}/*.env
+          matrix: true
+      - name: echo
+        run : echo ${{ steps.changed-files.outputs.all_changed_files }}
+
+  deploy-discovery-hub:
+    name: deploy-discovery-hub-production
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        files: ${{ fromJSON(needs.get-environments.outputs.files) }}
+    permissions:
+      packages: write
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
+      pull-requests: write # This is required for commenting on a pull request
+    defaults:
+      run:
+        shell: bash
+    env:
+      release_dir: release
