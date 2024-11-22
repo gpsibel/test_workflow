@@ -38,7 +38,7 @@ jobs:
     needs: get-environments
     strategy:
       matrix:
-        files: ${{ needs.get-environments.outputs.files }}
+        files: ${{ fromJSON(needs.get-environments.outputs.files) }}
     permissions:
       packages: write
       id-token: write # This is required for requesting the JWT
