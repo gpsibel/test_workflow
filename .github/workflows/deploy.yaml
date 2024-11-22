@@ -28,6 +28,11 @@ jobs:
         with:
           files: ${{ env.env_files_dir }}/*.env
           matrix: true
+          
+      - name: Set Output as JSON Array
+        run: |
+          echo "::set-output name=files::[$({{ steps.changed-files.outputs.all_changed_files }})]""
+          
       - name: Debug Raw Output
         run : echo ${{ steps.changed-files.outputs.all_changed_files }} 
 
