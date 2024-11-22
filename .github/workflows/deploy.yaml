@@ -35,9 +35,10 @@ jobs:
   deploy-job:
     name: deploy-job
     runs-on: ubuntu-latest
+    needs: get-environment
     strategy:
       matrix:
-        files: ${{ needs }}
+        files: ${{ needs.get-environments.outputs.files }}
     permissions:
       packages: write
       id-token: write # This is required for requesting the JWT
