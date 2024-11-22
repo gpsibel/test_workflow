@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        files: ${{ fromJSON(needs.get-environments.outputs.files) }}
+        files: ${{ needs.get-environments.outputs.files }}
     permissions:
       packages: write
       id-token: write # This is required for requesting the JWT
